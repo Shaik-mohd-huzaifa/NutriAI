@@ -1,46 +1,47 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, ChefHat, Calculator } from "lucide-react";
+import { CalendarDays, ChefHat, Calculator, MessageCircle } from "lucide-react";
+import { ModuleType } from "./ModuleContainer";
 
 interface QuickActionsProps {
-  onMealPlanClick?: () => void;
-  onCalorieTrackClick?: () => void;
-  onRecipeClick?: () => void;
+  activeModule: ModuleType;
+  onModuleChange: (module: ModuleType) => void;
 }
 
-const QuickActions = ({
-  onMealPlanClick = () => console.log("Meal Plan clicked"),
-  onCalorieTrackClick = () => console.log("Calorie Track clicked"),
-  onRecipeClick = () => console.log("Recipe clicked"),
-}: QuickActionsProps) => {
+const QuickActions = ({ activeModule, onModuleChange }: QuickActionsProps) => {
   return (
     <div className="w-full bg-white p-4 rounded-lg shadow-sm">
       <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
         <Button
-          variant="outline"
+          variant={activeModule === "chat" ? "default" : "outline"}
           className="flex items-center gap-2"
-          onClick={onMealPlanClick}
+          onClick={() =>
+            onModuleChange(activeModule === "chat" ? null : "chat")
+          }
         >
-          <CalendarDays className="h-4 w-4" />
+          <MessageCircle className="h-4 w-4" />
+          AI Chat
+        </Button>
+
+        <Button
+          variant={activeModule === "meal" ? "default" : "outline"}
+          className="flex items-center gap-2"
+          onClick={() =>
+            onModuleChange(activeModule === "meal" ? null : "meal")
+          }
+        >
+          <ChefHat className="h-4 w-4" />
           Meal Planning
         </Button>
 
         <Button
-          variant="outline"
+          variant={activeModule === "exercise" ? "default" : "outline"}
           className="flex items-center gap-2"
-          onClick={onCalorieTrackClick}
+          onClick={() =>
+            onModuleChange(activeModule === "exercise" ? null : "exercise")
+          }
         >
-          <Calculator className="h-4 w-4" />
-          Calorie Tracking
-        </Button>
-
-        <Button
-          variant="outline"
-          className="flex items-center gap-2"
-          onClick={onRecipeClick}
-        >
-          <ChefHat className="h-4 w-4" />
-          Recipe Suggestions
+          <CalendarDays className="h-4 w-4" />
+          Exercise Tracking
         </Button>
       </div>
     </div>

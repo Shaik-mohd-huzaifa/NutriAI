@@ -1,11 +1,14 @@
 import React from "react";
 import { Card } from "../ui/card";
+import { Button } from "../ui/button";
 import { Avatar } from "../ui/avatar";
 import { Progress } from "../ui/progress";
 import { Badge } from "../ui/badge";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
-import { User, Target, Apple, AlertCircle } from "lucide-react";
+import { User, Target, Apple, AlertCircle, LogOut } from "lucide-react";
+import { useAuth } from "@/lib/auth";
+import { useNavigate } from "react-router-dom";
 
 interface SidebarProps {
   userName?: string;
@@ -26,6 +29,14 @@ const Sidebar = ({
   ],
   restrictions = ["Nuts", "Dairy", "Gluten"],
 }: SidebarProps) => {
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/login");
+  };
+
   return (
     <Card className="h-full w-80 p-6 bg-background border-r">
       <div className="flex flex-col space-y-6">
@@ -98,6 +109,18 @@ const Sidebar = ({
             </div>
           </div>
         </ScrollArea>
+
+        <Separator className="my-6" />
+
+        {/* Sign Out Button */}
+        <Button
+          variant="ghost"
+          className="w-full justify-start"
+          onClick={handleSignOut}
+        >
+          <LogOut className="h-5 w-5 mr-2" />
+          Sign Out
+        </Button>
       </div>
     </Card>
   );
