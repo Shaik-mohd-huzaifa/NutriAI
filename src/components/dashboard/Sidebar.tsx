@@ -16,7 +16,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({
-  userName = "John Doe",
+  userName = "Shaik Mohammed Huzaifa",
   userImage = "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
   dietaryPreferences = ["Vegetarian", "Low Carb", "High Protein"],
   healthGoals = [
